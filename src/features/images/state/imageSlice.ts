@@ -11,7 +11,7 @@ export const fetchImagesAsync = createAsyncThunk<Image[], string>(
     'images/fetchImages',
     async (query, { rejectWithValue }) => {
         try {
-            if(query) {}
+            if(query) { console.log("Hello") }
             const response = await [];
             return response;
         } catch (error) {
