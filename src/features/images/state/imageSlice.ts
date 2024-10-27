@@ -1,20 +1,33 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import {Image, ImagesState } from "../types/imageTypes";
+import { Image, ImageListState } from "../types/imageTypes";
+import { getRandomImage } from "../../../services/imageService"
 
-const initialState: ImagesState = {
+const initialState: ImageListState = {
     images: [],
     status: 'idle',
     error: null
 }
 
-export const fetchImagesAsync = createAsyncThunk<Image[], string>(
-    'images/fetchImages',
-    async (query, { rejectWithValue }) => {
+export const fetchRandom = createAsyncThunk<Image[], string>(
+    'images/fetchRandom',
+    async (count, { rejectWithValue }) => {
         try {
-            if(query) { console.log("Hello") }
-            const response = await [];
+            const response = await getRandomImage(count);
             return response;
         } catch (error) {
+            return rejectWithValue((error as Error).message);
+        }
+    }
+);
+
+export const fetchByQuery = createAsyncThunk<Image[], string>(
+    'images/fetchByQuery',
+    async (query, { rejectWithValue }) => {
+        try {
+            const response = await getRandomImage(query);
+            return response;
+        }
+        catch (error) {
             return rejectWithValue((error as Error).message);
         }
     }
@@ -26,14 +39,27 @@ const imageSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-        .addCase(fetchImagesAsync.pending, (state) => {
+        .addCase(fetchRandom.pending, (state) => {
             state.status = 'loading';
         })
-        .addCase(fetchImagesAsync.fulfilled, (state, action: PayloadAction<Image[]>) => {
+        .addCase(fetchRandom.fulfilled, (state, action: PayloadAction<Image[]>) => {
             state.status = 'succeeded';
             state.images = action.payload;
         })
-        .addCase(fetchImagesAsync.rejected, (state, action) => {
+        .addCase(fetchRandom.rejected, (state, action) => {
+            state.status = 'failed';
+            state.error = action.payload as string;
+        });
+
+        builder
+        .addCase(fetchByQuery.pending, (state) => {
+            state.status = 'loading';
+        })
+        .addCase(fetchByQuery.fulfilled, (state, action: PayloadAction<Image[]>) => {
+            state.status = 'succeeded';
+            state.images = action.payload;
+        })
+        .addCase(fetchByQuery.rejected, (state, action) => {
             state.status = 'failed';
             state.error = action.payload as string;
         });
