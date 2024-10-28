@@ -6,12 +6,12 @@ import { setSearchQuery } from "../../search/state/searchSlice";
 import { fetchByQuery } from "../state/imageSlice";
 
 const ImageCard: React.FC<ImageProps> = (props: ImageProps) => {
-    const tags = extractNouns(props.image.alt_description || props.image.description || '');
     const formattedDate = transformDate(props.image.created_at);
+
+    const tags = extractNouns(props.selectedTag, props.image.alt_description || props.image.description || '');
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-
     
     const searchByTag = (tag: string) => {
         navigate(`/tag/${tag}`);

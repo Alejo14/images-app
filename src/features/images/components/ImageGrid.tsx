@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks"
 import { fetchRandom } from "../state/imageSlice";
 import { Image, ImageGridProps } from "../types/imageTypes";
@@ -11,7 +11,10 @@ import { setSearchQuery } from "../../search/state/searchSlice";
 const ImageGrid: React.FC<ImageGridProps> = (props: ImageGridProps) => {
     const dispatch = useAppDispatch();
     const { images, status, error } = useAppSelector(state => state.images);
+    const query = useAppSelector(state => state.search.query);
     const location = useLocation();
+
+    const [selectedTag, setSelectedTag] = useState(query);
 
     const fetchDone = useRef(false);
 
@@ -22,6 +25,10 @@ const ImageGrid: React.FC<ImageGridProps> = (props: ImageGridProps) => {
             fetchDone.current = true;
         }
     }, [location.pathname, dispatch]);
+
+    useEffect(() => {
+        setSelectedTag(selectedTag => selectedTag = query);
+    }, [query])
 
     if (status === 'loading') {
         return <LoadSpin></LoadSpin>;
@@ -35,7 +42,7 @@ const ImageGrid: React.FC<ImageGridProps> = (props: ImageGridProps) => {
         <div className="w-fit">
             <h2 className="text-left font-bold">{props.subtitle}</h2>
             { images.map((image: Image) =>
-                <ImageCard key={image.id} image={image}></ImageCard>
+                <ImageCard key={image.id} image={image} selectedTag={selectedTag}></ImageCard>
             )}
         </div>
     )

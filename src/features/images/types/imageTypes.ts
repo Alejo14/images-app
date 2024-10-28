@@ -15,6 +15,7 @@ export interface ImageListState {
 
 export interface ImageProps {
     image: Image;
+    selectedTag: string
 }
 
 export interface ImageGridProps {
