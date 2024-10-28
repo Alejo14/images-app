@@ -1,50 +1,31 @@
-# React + TypeScript + Vite
+# Photo App - Alejandro Tapia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Configuration Details
 
-Currently, two official plugins are available:
+In order to configure the site to work locally follow the instructions:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Register the app to work with the Unsplash API
+2. Create in the root folder the following files .env and .env.d.ts
+3. For the .env file:
+- Create the variable VITE_ACCESS_KEY and assign it the access key obtained when registering the app.
+- Create the variable VITE_SECRET_KEY and assing it the secret key obtained when registering the app.
+- Create the variable VITE_API_URL and assing it the value of the base url of the Unsplash API: https://api.unsplash.com
+- Create the variable VITE_API_VERSION and assign it the value V1 (this is to set up the connection to the correct version of the API)
+4. For the .env.d.ts:
+- Paste the following
+```ts
+interface ImportMetaEnv {
+    readonly VITE_ACCESS_KEY: string;
+    readonly VITE_SECRET_KEY: string;
+    readonly VITE_API_URL: string;
+    readonly VITE_API_VERSION: string;
+}
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+interface ImportMeta {
+    readonly env: ImportMetaEnv;
+}
 ```
+5. Run the comands npm install
+6. Run the command npm run dev to deploy the solution
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Considerations: Node Version: v20.10.0 | NPM Version: 10.8.3
