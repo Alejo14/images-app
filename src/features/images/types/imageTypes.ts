@@ -16,3 +16,7 @@ export interface ImageListState {
 export interface ImageProps {
     image: Image;
 }
+
+export interface ImageGridProps {
+    subtitle: string;
+}

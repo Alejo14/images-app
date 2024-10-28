@@ -1,11 +1,11 @@
 import ImageGrid from "../features/images/components/ImageGrid";
 
-const HomePage: React.FC = () => {
+const FilterImagesPage: React.FC = () => {
     return (
         <section className="flex justify-center align-middle flex-col items-center">
-            <ImageGrid subtitle="Trending Photos Right Now"></ImageGrid>
+            <ImageGrid subtitle="Results"></ImageGrid>
         </section>
     )
 }
 
-export default HomePage;
+export default FilterImagesPage;

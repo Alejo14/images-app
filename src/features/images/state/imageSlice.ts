@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { Image, ImageListState } from "../types/imageTypes";
-import { getRandomImage } from "../../../services/imageService"
+import { getImageByQuery, getRandomImage } from "../api/imageService";
 
 const initialState: ImageListState = {
     images: [],
@@ -10,10 +10,10 @@ const initialState: ImageListState = {
 
 export const fetchRandom = createAsyncThunk<Image[], string>(
     'images/fetchRandom',
-    async (count, { rejectWithValue }) => {
+    async ( _, { rejectWithValue }) => {
         try {
-            const response = await getRandomImage(count);
-            return response;
+            const response = await getRandomImage();
+            return response;            
         } catch (error) {
             return rejectWithValue((error as Error).message);
         }
@@ -24,7 +24,7 @@ export const fetchByQuery = createAsyncThunk<Image[], string>(
     'images/fetchByQuery',
     async (query, { rejectWithValue }) => {
         try {
-            const response = await getRandomImage(query);
+            const response = await getImageByQuery(query);
             return response;
         }
         catch (error) {
