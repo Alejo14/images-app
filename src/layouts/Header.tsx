@@ -14,7 +14,7 @@ const Header: React.FC = () => {
                 <h1 className="mb-1">Photo Search</h1>
                 <p>Alejandro Tapia</p>
             </div>
-            {location.pathname !== '/' && <a onClick={handleClick} href="" className="cursor-pointer text-white hover:text-black">Home</a>}
+            {location.pathname !== '/' && <a onClick={handleClick} className="cursor-pointer text-white hover:text-black">Home</a>}
         </section>
     )
 }

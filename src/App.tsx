@@ -5,6 +5,7 @@ import Header from './layouts/Header';
 import Footer from './layouts/Footer';
 import SearchBar from "./features/search/components/SearchBar";
 import FilterImagesPage from './pages/FilterImagesPage';
+import ErrorMessage from './components/ErrorMessage';
 
 const App: React.FC = () => {
 
@@ -15,6 +16,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path='/' element={<HomePage></HomePage>}></Route>
         <Route path='/tag/:query' element={<FilterImagesPage></FilterImagesPage>}></Route>
+        <Route path='/*' element={<ErrorMessage message='404 - Go to Home'></ErrorMessage>}></Route>
       </Routes>
       <Footer></Footer>
     </BrowserRouter>

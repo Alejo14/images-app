@@ -1,27 +1,34 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAppDispatch, useAppSelector } from "../../../state/hooks"
 import { fetchRandom } from "../state/imageSlice";
 import { Image, ImageGridProps } from "../types/imageTypes";
 import ImageCard from "./ImageCard";
 import { useLocation } from "react-router-dom";
+import LoadSpin from "../../../components/LoadSpin";
+import ErrorMessage from "../../../components/ErrorMessage";
+import { setSearchQuery } from "../../search/state/searchSlice";
 
 const ImageGrid: React.FC<ImageGridProps> = (props: ImageGridProps) => {
     const dispatch = useAppDispatch();
     const { images, status, error } = useAppSelector(state => state.images);
     const location = useLocation();
 
+    const fetchDone = useRef(false);
+
     useEffect(() => {
-        if(location.pathname === '/') {
+        if(location.pathname === '/' && !fetchDone.current) {
             dispatch(fetchRandom(''));
+            dispatch(setSearchQuery(''))
+            fetchDone.current = true;
         }
     }, [location.pathname, dispatch]);
 
     if (status === 'loading') {
-        return <p>Loading...</p>;
+        return <LoadSpin></LoadSpin>;
     }
     
     if (status === 'failed') {
-        return <p>Error: {error}</p>;
+        return <ErrorMessage message={error || ''}></ErrorMessage>;
     }
 
     return (

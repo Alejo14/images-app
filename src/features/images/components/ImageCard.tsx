@@ -21,10 +21,10 @@ const ImageCard: React.FC<ImageProps> = (props: ImageProps) => {
     
     return (
         <figure className="relative py-5">
-            <img className="w-full"
+            <img className="w-full image-container"
                 src={props.image.urls.small}
                 alt={props.image.alt_description || `Photo ${props.image.id}`} />
-            <figcaption className="absolute bottom-5 bg-black opacity-70 w-full p-3">
+            <figcaption className="absolute bottom-5 bg-black opacity-70 w-full p-3 image-caption">
                 <div className="flex justify-between">
                     <div className="flex flex-col">
                         <p>by {props.image.user.name}</p>
