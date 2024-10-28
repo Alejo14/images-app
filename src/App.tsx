@@ -6,16 +6,12 @@ import Footer from './layouts/Footer';
 import SearchBar from "./features/search/components/SearchBar";
 import FilterImagesPage from './pages/FilterImagesPage';
 import ErrorMessage from './components/ErrorMessage';
-import { useEffect } from 'react';
+import useRedirectHome from './hooks/useRedirectHome';
 
 const App: React.FC = () => {
   
-  useEffect(() => {
-    //Redirection on reload
-    if (window.location.pathname !== '/') {
-        window.location.replace('/');
-    }
-}, []);
+  //Custom hook that redirects home after page reload
+  useRedirectHome();
 
   return (
     <BrowserRouter>
